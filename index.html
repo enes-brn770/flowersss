@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Ecrin'e Özel Çiçek Buketi 🌷✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+  <!-- Gece / Gökyüzü Arka Planı ve Parçacıklar -->
+  <div class="night-sky">
+    <div class="stars"></div>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+  </div>
+
+  <canvas id="fireflies-canvas"></canvas>
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- Ana Sahne / Buket Alanı -->
+  <main class="scene-container">
+    <div class="bouquet-stage">
+      
+      <!-- Çiçek Buketi -->
+      <div class="bouquet-wrapper" id="bouquet">
+        
+        <!-- Buket SVG İllüstrasyonu (Yüksek Gerçekçilik & Çoklu Çiçekler) -->
+        <svg class="bouquet-svg" viewBox="0 0 520 740" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gölgeler & Derinlik -->
+            <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.32"/>
+            </filter>
+            <filter id="card-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="2" dy="8" stdDeviation="10" flood-color="#050505" flood-opacity="0.45"/>
+            </filter>
+            <filter id="paperclip-shadow" x="-40%" y="-40%" width="180%" height="180%">
+              <feDropShadow dx="1" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.5"/>
+            </filter>
+
+            <!-- KIRMIZI LALE (RED TULIP) GRADIENTLERİ -->
+            <linearGradient id="tulip-deep-1" x1="0%" y1="100%" x2="40%" y2="0%">
+              <stop offset="0%" stop-color="#4a040d" />
+              <stop offset="25%" stop-color="#800a17" />
+              <stop offset="60%" stop-color="#b91c1c" />
+              <stop offset="85%" stop-color="#e11d48" />
+              <stop offset="100%" stop-color="#fb7185" />
+            </linearGradient>
+            <linearGradient id="tulip-deep-2" x1="100%" y1="100%" x2="30%" y2="0%">
+              <stop offset="0%" stop-color="#3d0309" />
+              <stop offset="30%" stop-color="#700914" />
+              <stop offset="70%" stop-color="#c1121f" />
+              <stop offset="100%" stop-color="#f43f5e" />
+            </linearGradient>
+            <linearGradient id="tulip-inner" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#2d0206" />
+              <stop offset="45%" stop-color="#991b1b" />
+              <stop offset="100%" stop-color="#f87171" />
+            </linearGradient>
+
+            <!-- NERGİS (DAFFODIL) GRADIENTLERİ -->
+            <linearGradient id="daff-petal-cream" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#fef08a" />
+              <stop offset="35%" stop-color="#fefce8" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <linearGradient id="daff-petal-gold" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#fde047" />
+              <stop offset="50%" stop-color="#fef9c3" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <radialGradient id="daff-cup-grad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#92400e" />
+              <stop offset="40%" stop-color="#d97706" />
+              <stop offset="75%" stop-color="#f59e0b" />
+              <stop offset="92%" stop-color="#facc15" />
+              <stop offset="100%" stop-color="#ea580c" />
+            </radialGradient>
+
+            <!-- MANOLYA (MAGNOLIA) GRADIENTLERİ -->
+            <linearGradient id="mag-petal-blush" x1="20%" y1="100%" x2="60%" y2="0%">
+              <stop offset="0%" stop-color="#be185d" />
+              <stop offset="25%" stop-color="#e11d48" stop-opacity="0.85" />
+              <stop offset="55%" stop-color="#f472b6" stop-opacity="0.65" />
+              <stop offset="80%" stop-color="#fce7f3" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <linearGradient id="mag-petal-soft" x1="70%" y1="100%" x2="30%" y2="0%">
+              <stop offset="0%" stop-color="#9d174d" />
+              <stop offset="30%" stop-color="#f43f5e" stop-opacity="0.75" />
+              <stop offset="65%" stop-color="#fbcfe8" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <linearGradient id="mag-core" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#831843" />
+              <stop offset="60%" stop-color="#fb7185" />
+              <stop offset="100%" stop-color="#fef08a" />
+            </linearGradient>
+
+            <!-- BEYAZ PAPATYA (WHITE DAISY) GRADIENTLERİ -->
+            <linearGradient id="daisy-petal-clean" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#cbd5e1" />
+              <stop offset="25%" stop-color="#f1f5f9" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <radialGradient id="daisy-heart-grad" cx="45%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#fef08a" />
+              <stop offset="35%" stop-color="#f59e0b" />
+              <stop offset="70%" stop-color="#d97706" />
+              <stop offset="95%" stop-color="#b45309" />
+              <stop offset="100%" stop-color="#78350f" />
+            </radialGradient>
+
+            <!-- YEŞİLLİKLER & SAPLAR -->
+            <linearGradient id="stem-grad-lush" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#143621" />
+              <stop offset="35%" stop-color="#2d6a4f" />
+              <stop offset="70%" stop-color="#40916c" />
+              <stop offset="100%" stop-color="#1b4332" />
+            </linearGradient>
+            <linearGradient id="leaf-grad-rich" x1="0%" y1="100%" x2="60%" y2="0%">
+              <stop offset="0%" stop-color="#0b2217" />
+              <stop offset="45%" stop-color="#1b4332" />
+              <stop offset="85%" stop-color="#52b788" />
+              <stop offset="100%" stop-color="#74c69d" />
+            </linearGradient>
+            <linearGradient id="eucalyptus-leaf" x1="0%" y1="100%" x2="80%" y2="0%">
+              <stop offset="0%" stop-color="#1e2e1d" />
+              <stop offset="50%" stop-color="#4a5d3e" />
+              <stop offset="90%" stop-color="#849673" />
+              <stop offset="100%" stop-color="#b5c4a7" />
+            </linearGradient>
+
+            <!-- AMBALAJ KAĞIDI (KRAFT & DOKU) -->
+            <linearGradient id="kraft-wrap-back" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#d8baa4" />
+              <stop offset="45%" stop-color="#c69f83" />
+              <stop offset="100%" stop-color="#8a6148" />
+            </linearGradient>
+            <linearGradient id="kraft-wrap-left" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e9d3c1" />
+              <stop offset="50%" stop-color="#d0a78c" />
+              <stop offset="100%" stop-color="#a07559" />
+            </linearGradient>
+            <linearGradient id="kraft-wrap-right" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#eddacb" />
+              <stop offset="50%" stop-color="#c89d81" />
+              <stop offset="100%" stop-color="#8e644b" />
+            </linearGradient>
+            <linearGradient id="vellum-paper" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.4" />
+              <stop offset="45%" stop-color="#ffffff" stop-opacity="0.18" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.45" />
+            </linearGradient>
+
+            <!-- İPEK SATEN KURDELE -->
+            <linearGradient id="satin-ribbon" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff4d6d" />
+              <stop offset="30%" stop-color="#c9184a" />
+              <stop offset="70%" stop-color="#800f2f" />
+              <stop offset="100%" stop-color="#590d22" />
+            </linearGradient>
+            <linearGradient id="ribbon-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+            </linearGradient>
+
+            <!-- METALİK ATAÇ (PAPERCLIP) GRADIENTLERİ -->
+            <linearGradient id="paperclip-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f8fafc" />
+              <stop offset="25%" stop-color="#94a3b8" />
+              <stop offset="50%" stop-color="#f1f5f9" />
+              <stop offset="75%" stop-color="#64748b" />
+              <stop offset="100%" stop-color="#cbd5e1" />
+            </linearGradient>
+            <linearGradient id="paperclip-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fef08a" />
+              <stop offset="30%" stop-color="#b45309" />
+              <stop offset="60%" stop-color="#fde047" />
+              <stop offset="85%" stop-color="#d97706" />
+              <stop offset="100%" stop-color="#fef9c3" />
+            </linearGradient>
+          </defs>
+
+          <!-- ================= ARKA AMBALAJ (BOUQUET BACK WRAP) ================= -->
+          <g id="wrap-background" filter="url(#soft-shadow)">
+            <!-- Arka geniş kraft kağıdı kıvrımları -->
+            <polygon points="105,330 260,130 415,330 330,620 190,620" fill="url(#kraft-wrap-back)" />
+            <!-- İç astar ipek kağıt katmanları -->
+            <polygon points="120,315 260,155 400,315 315,600 205,600" fill="#fff5ee" opacity="0.4" />
+            <polygon points="135,295 260,175 385,295 305,580 215,580" fill="#fce4ec" opacity="0.32" />
+          </g>
+
+          <!-- ================= ARKA YAPRAKLAR VE ÇİÇEK SAPLARI ================= -->
+          <g id="foliage-back">
+            <!-- Okaliptüs Dalı Sol -->
+            <g class="breeze-anim-slow" style="transform-origin: 170px 470px;">
+              <path d="M 180,480 Q 120,360 85,260 Q 130,290 180,440" fill="url(#eucalyptus-leaf)" opacity="0.85"/>
+              <ellipse cx="100" cy="275" rx="16" ry="24" transform="rotate(-38 100 275)" fill="url(#eucalyptus-leaf)" />
+              <ellipse cx="120" cy="325" rx="17" ry="26" transform="rotate(-28 120 325)" fill="url(#eucalyptus-leaf)" />
+              <ellipse cx="145" cy="380" rx="18" ry="28" transform="rotate(-18 145 380)" fill="url(#eucalyptus-leaf)" />
+            </g>
+
+            <!-- Okaliptüs Dalı Sağ -->
+            <g class="breeze-anim-slow-rev" style="transform-origin: 350px 470px;">
+              <path d="M 340,480 Q 400,360 435,260 Q 390,290 340,440" fill="url(#eucalyptus-leaf)" opacity="0.85"/>
+              <ellipse cx="420" cy="275" rx="16" ry="24" transform="rotate(38 420 275)" fill="url(#eucalyptus-leaf)" />
+              <ellipse cx="400" cy="325" rx="17" ry="26" transform="rotate(28 400 325)" fill="url(#eucalyptus-leaf)" />
+              <ellipse cx="375" cy="380" rx="18" ry="28" transform="rotate(18 375 380)" fill="url(#eucalyptus-leaf)" />
+            </g>
+
+            <!-- Güçlü Doğal Saplar -->
+            <path d="M 255,630 Q 252,470 215,330 Q 200,240 195,180" stroke="url(#stem-grad-lush)" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M 265,630 Q 262,460 295,330 Q 315,240 315,170" stroke="url(#stem-grad-lush)" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M 260,630 Q 245,450 155,340 Q 130,280 120,220" stroke="url(#stem-grad-lush)" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+            <path d="M 260,630 Q 275,450 365,340 Q 390,280 395,215" stroke="url(#stem-grad-lush)" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+            <path d="M 260,630 Q 260,420 260,200" stroke="url(#stem-grad-lush)" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+            <!-- Kavisli Lale Yaprakları -->
+            <path d="M 235,470 C 160,420 100,340 130,250 C 155,305 195,385 240,440 Z" fill="url(#leaf-grad-rich)" opacity="0.92"/>
+            <path d="M 285,465 C 360,410 420,330 390,240 C 365,295 325,375 280,435 Z" fill="url(#leaf-grad-rich)" opacity="0.92"/>
+          </g>
+
+          <!-- Cipsofilya (Baby's Breath) Beyaz Minik Yıldız Çiçekleri -->
+          <g id="babys-breath" opacity="0.9">
+            <g class="gypsophila-cluster" transform="translate(95, 215)">
+              <circle cx="10" cy="15" r="3.5" fill="#ffffff" />
+              <circle cx="28" cy="6" r="3" fill="#ffffff" />
+              <circle cx="40" cy="24" r="4" fill="#ffffff" />
+              <circle cx="8" cy="32" r="3" fill="#ffffff" />
+              <circle cx="24" cy="42" r="3.5" fill="#ffffff" />
+              <path d="M 22,42 L 24,42 M 22,42 L 40,24 M 22,42 L 28,6 M 22,42 L 10,15 M 22,42 L 8,32" stroke="#52b788" stroke-width="1.2" fill="none"/>
+            </g>
+            <g class="gypsophila-cluster" transform="translate(370, 205)">
+              <circle cx="15" cy="12" r="3.5" fill="#ffffff" />
+              <circle cx="32" cy="26" r="3" fill="#ffffff" />
+              <circle cx="6" cy="30" r="4" fill="#ffffff" />
+              <circle cx="26" cy="44" r="3.5" fill="#ffffff" />
+              <circle cx="10" cy="48" r="3" fill="#ffffff" />
+              <path d="M 22,48 L 15,12 M 22,48 L 32,26 M 22,48 L 6,30 M 22,48 L 26,44 M 22,48 L 10,48" stroke="#52b788" stroke-width="1.2" fill="none"/>
+            </g>
+          </g>
+
+          <!-- ================= BUKET İÇİ ÇOKLU ÇİÇEKLER ================= -->
+          
+          <!-- 1. BEYAZ PAPATYA 1 (Arka Sol Üst) -->
+          <g class="flower-item" transform="translate(135, 215) scale(0.95)">
+            <g class="daisy-petals">
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(0)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(22.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(45)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(67.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(90)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(112.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(135)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(157.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(180)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(202.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(225)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(247.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(270)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(292.5)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(315)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(337.5)" />
+            </g>
+            <circle cx="0" cy="0" r="13" fill="url(#daisy-heart-grad)" filter="url(#soft-shadow)" />
+            <circle cx="-1" cy="-1" r="9" fill="none" stroke="#fef08a" stroke-width="1.3" stroke-dasharray="2,2" opacity="0.65" />
+          </g>
+
+          <!-- 2. NERGİS 1 (Arka Sağ Üst) -->
+          <g class="flower-item" transform="translate(365, 205) scale(1.02)">
+            <g class="daff-petals">
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(0)" />
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(60)" />
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(120)" />
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(180)" />
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(240)" />
+              <path d="M 0,0 C -18,-24 -12,-52 0,-58 C 12,-52 18,-24 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(300)" />
+            </g>
+            <ellipse cx="0" cy="0" rx="16" ry="16" fill="url(#daff-cup-grad)" filter="url(#soft-shadow)"/>
+            <circle cx="0" cy="0" r="16" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-dasharray="3,2" opacity="0.8"/>
+            <circle cx="0" cy="0" r="6" fill="#78350f" opacity="0.6"/>
+            <circle cx="-2" cy="-2" r="1.7" fill="#fef08a" />
+            <circle cx="2" cy="0" r="1.7" fill="#fef08a" />
+          </g>
+
+          <!-- 3. KIRMIZI LALE 1 (Ana Üst Zirve) -->
+          <g class="flower-item" transform="translate(260, 160) scale(1.18)">
+            <!-- Arka taç yapraklar -->
+            <path d="M -12,-5 C -25,-35 -15,-65 0,-70 C 15,-65 25,-35 12,-5 Z" fill="url(#tulip-inner)" opacity="0.92" />
+            <!-- Sol lale kanadı -->
+            <path d="M 0,10 C -40,10 -50,-40 -20,-62 C -10,-40 0,-15 0,10 Z" fill="url(#tulip-deep-1)" filter="url(#soft-shadow)" />
+            <!-- Sağ lale kanadı -->
+            <path d="M 0,10 C 40,10 50,-40 20,-62 C 10,-40 0,-15 0,10 Z" fill="url(#tulip-deep-2)" filter="url(#soft-shadow)" />
+            <!-- Ön merkez kavisli yaprak ve ışıltı çizgisi -->
+            <path d="M -15,10 C -25,-15 -20,-50 0,-58 C 20,-50 25,-15 15,10 Z" fill="url(#tulip-deep-1)" opacity="0.95" />
+            <path d="M -3,-10 C -8,-25 -5,-45 0,-52 C 5,-45 8,-25 3,-10 Z" fill="#fca5a5" opacity="0.45" />
+          </g>
+
+          <!-- 4. MANOLYA 1 (Sol Orta Üst) -->
+          <g class="flower-item" transform="translate(190, 275) scale(1.12)">
+            <!-- Geniş taç yapraklar -->
+            <path d="M 0,10 C -50,-10 -60,-50 -25,-65 C -10,-40 0,-10 0,10 Z" fill="url(#mag-petal-blush)" opacity="0.88"/>
+            <path d="M 0,10 C 50,-10 60,-50 25,-65 C 10,-40 0,-10 0,10 Z" fill="url(#mag-petal-soft)" opacity="0.88"/>
+            <path d="M 0,15 C -25,-30 -30,-65 0,-75 C 30,-65 25,-30 0,15 Z" fill="url(#mag-petal-blush)" opacity="0.92"/>
+            <!-- Ön kadeh yaprakları -->
+            <path d="M -25,12 C -45,0 -40,-35 -15,-45 C 5,-25 5,0 -25,12 Z" fill="url(#mag-petal-soft)" filter="url(#soft-shadow)"/>
+            <path d="M 25,12 C 45,0 40,-35 15,-45 C -5,-25 -5,0 25,12 Z" fill="url(#mag-petal-blush)" filter="url(#soft-shadow)"/>
+            <path d="M -15,15 C -20,-5 -15,-30 0,-38 C 15,-30 20,-5 15,15 Z" fill="#fff1f2" opacity="0.92"/>
+            <ellipse cx="0" cy="-5" rx="7" ry="11" fill="url(#mag-core)" />
+            <circle cx="0" cy="-12" r="2.5" fill="#fef08a" />
+          </g>
+
+          <!-- 5. KIRMIZI LALE 2 (Sağ Orta) -->
+          <g class="flower-item" transform="translate(325, 285) rotate(20) scale(1.02)">
+            <path d="M -10,-5 C -20,-30 -12,-55 0,-60 C 12,-55 20,-30 10,-5 Z" fill="url(#tulip-inner)" opacity="0.9" />
+            <path d="M 0,10 C -35,10 -45,-35 -18,-55 C -8,-35 0,-15 0,10 Z" fill="url(#tulip-deep-1)" filter="url(#soft-shadow)" />
+            <path d="M 0,10 C 35,10 45,-35 18,-55 C 8,-35 0,-15 0,10 Z" fill="url(#tulip-deep-2)" filter="url(#soft-shadow)" />
+            <path d="M -12,10 C -20,-12 -16,-42 0,-50 C 16,-42 20,-12 12,10 Z" fill="url(#tulip-deep-1)" opacity="0.95" />
+            <path d="M -2,-8 C -6,-20 -4,-38 0,-44 C 4,-38 6,-20 2,-8 Z" fill="#fca5a5" opacity="0.45" />
+          </g>
+
+          <!-- 6. NERGİS 2 (Merkez Sol Ön) -->
+          <g class="flower-item" transform="translate(210, 360) rotate(-12) scale(1.05)">
+            <g class="daff-petals">
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(10)" />
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(70)" />
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(130)" />
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(190)" />
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(250)" />
+              <path d="M 0,0 C -16,-22 -10,-48 0,-52 C 10,-48 16,-22 0,0 Z" fill="url(#daff-petal-gold)" transform="rotate(310)" />
+            </g>
+            <ellipse cx="0" cy="0" rx="15" ry="15" fill="url(#daff-cup-grad)" filter="url(#soft-shadow)"/>
+            <circle cx="0" cy="0" r="15" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-dasharray="3,2" opacity="0.85"/>
+            <circle cx="0" cy="0" r="6" fill="#78350f" opacity="0.6"/>
+            <circle cx="-2" cy="-2" r="1.6" fill="#fef08a" />
+            <circle cx="2" cy="0" r="1.6" fill="#fef08a" />
+          </g>
+
+          <!-- 7. MANOLYA 2 (Sağ Ön Taraf) -->
+          <g class="flower-item" transform="translate(360, 345) rotate(16) scale(0.98)">
+            <path d="M 0,10 C -45,-10 -55,-45 -22,-60 C -8,-35 0,-10 0,10 Z" fill="url(#mag-petal-blush)" opacity="0.88"/>
+            <path d="M 0,10 C 45,-10 55,-45 22,-60 C 8,-35 0,-10 0,10 Z" fill="url(#mag-petal-soft)" opacity="0.88"/>
+            <path d="M 0,15 C -22,-28 -28,-60 0,-70 C 28,-60 22,-28 0,15 Z" fill="url(#mag-petal-blush)" opacity="0.92"/>
+            <path d="M -22,12 C -40,0 -35,-30 -12,-40 C 4,-20 4,0 -22,12 Z" fill="url(#mag-petal-soft)" filter="url(#soft-shadow)"/>
+            <path d="M 22,12 C 40,0 35,-30 12,-40 C -4,-20 -4,0 22,12 Z" fill="url(#mag-petal-blush)" filter="url(#soft-shadow)"/>
+            <path d="M -12,15 C -18,-5 -12,-28 0,-34 C 12,-28 18,-5 12,15 Z" fill="#fff1f2" opacity="0.92"/>
+            <ellipse cx="0" cy="-4" rx="6" ry="10" fill="url(#mag-core)" />
+          </g>
+
+          <!-- 8. BEYAZ PAPATYA 2 (Ön Sağ Merkez) -->
+          <g class="flower-item" transform="translate(295, 370) rotate(14) scale(1.05)">
+            <g class="daisy-petals">
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(0)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(24)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(48)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(72)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(96)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(120)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(144)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(168)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(192)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(216)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(240)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(264)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(288)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(312)" />
+              <path d="M -5,0 C -7,-24 7,-24 5,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(336)" />
+            </g>
+            <circle cx="0" cy="0" r="13" fill="url(#daisy-heart-grad)" filter="url(#soft-shadow)" />
+            <circle cx="-1" cy="-1" r="9" fill="none" stroke="#fef08a" stroke-width="1.3" stroke-dasharray="2,2" opacity="0.7" />
+          </g>
+
+          <!-- 9. BEYAZ PAPATYA 3 (Orta İç Çiçek) -->
+          <g class="flower-item" transform="translate(250, 275) rotate(-18) scale(0.85)">
+            <g class="daisy-petals">
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(0)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(30)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(60)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(90)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(120)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(150)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(180)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(210)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(240)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(270)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(300)" />
+              <path d="M -4,0 C -6,-20 6,-20 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(330)" />
+            </g>
+            <circle cx="0" cy="0" r="11" fill="url(#daisy-heart-grad)" />
+          </g>
+
+          <!-- 10. KIRMIZI LALE 3 (Sol Yan Tomurcuk) -->
+          <g class="flower-item" transform="translate(145, 335) rotate(-24) scale(0.92)">
+            <path d="M -8,-5 C -18,-25 -10,-48 0,-52 C 10,-48 18,-25 8,-5 Z" fill="url(#tulip-inner)" opacity="0.9" />
+            <path d="M 0,8 C -30,8 -38,-30 -15,-48 C -6,-30 0,-12 0,8 Z" fill="url(#tulip-deep-1)" filter="url(#soft-shadow)" />
+            <path d="M 0,8 C 30,8 38,-30 15,-48 C 6,-30 0,-12 0,8 Z" fill="url(#tulip-deep-2)" filter="url(#soft-shadow)" />
+            <path d="M -10,8 C -16,-10 -14,-36 0,-44 C 14,-36 16,-10 10,8 Z" fill="url(#tulip-deep-1)" opacity="0.95" />
+          </g>
+
+          <!-- 11. NERGİS 3 (Arka Sol İkinci Nergis) -->
+          <g class="flower-item" transform="translate(195, 205) rotate(15) scale(0.88)">
+            <g class="daff-petals">
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(0)" />
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(60)" />
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(120)" />
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(180)" />
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(240)" />
+              <path d="M 0,0 C -15,-20 -10,-42 0,-48 C 10,-42 15,-20 0,0 Z" fill="url(#daff-petal-cream)" transform="rotate(300)" />
+            </g>
+            <ellipse cx="0" cy="0" rx="13" ry="13" fill="url(#daff-cup-grad)" filter="url(#soft-shadow)"/>
+            <circle cx="0" cy="0" r="13" fill="none" stroke="#ea580c" stroke-width="2" stroke-dasharray="3,2" opacity="0.8"/>
+            <circle cx="0" cy="0" r="5" fill="#78350f" opacity="0.6"/>
+          </g>
+
+          <!-- 12. BEYAZ PAPATYA 4 (Ön Sol Küçük Papatya) -->
+          <g class="flower-item" transform="translate(170, 395) rotate(-10) scale(0.78)">
+            <g class="daisy-petals">
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(0)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(25.7)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(51.4)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(77.1)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(102.8)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(128.5)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(154.2)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(180)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(205.7)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(231.4)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(257.1)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(282.8)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(308.5)" />
+              <path d="M -4,0 C -6,-22 6,-22 4,0 Z" fill="url(#daisy-petal-clean)" transform="rotate(334.2)" />
+            </g>
+            <circle cx="0" cy="0" r="10.5" fill="url(#daisy-heart-grad)" />
+          </g>
+
+          <!-- ================= ÖN AMBALAJ KAĞIDI (KRAFT & VELLUM) ================= -->
+          <g id="wrap-foreground" filter="url(#soft-shadow)">
+            <!-- Sol Ön Kanat -->
+            <path d="M 110,380 Q 140,440 195,600 L 260,620 L 275,480 L 180,355 Z" fill="url(#kraft-wrap-left)" />
+            <!-- Sağ Ön Kanat (Solun üzerine binen) -->
+            <path d="M 405,375 Q 375,440 325,600 L 255,620 L 240,475 L 340,350 Z" fill="url(#kraft-wrap-right)" />
+            <!-- Yarı Saydam Astar Kağıdı (Vellum) -->
+            <path d="M 135,390 Q 200,450 260,435 Q 320,450 380,390 Q 315,520 260,590 Q 205,520 135,390 Z" fill="url(#vellum-paper)" />
+            
+            <!-- Katlanma Gölge Çizgileri -->
+            <path d="M 195,600 L 275,480" stroke="#795548" stroke-width="1.8" opacity="0.4" />
+            <path d="M 325,600 L 240,475" stroke="#4e342e" stroke-width="2.2" opacity="0.55" />
+
+            <!-- Alttan Görünen Bağlanmış Saplar -->
+            <g id="stem-bottoms" opacity="0.95">
+              <path d="M 235,615 L 230,660" stroke="#143621" stroke-width="6" stroke-linecap="round"/>
+              <path d="M 248,618 L 245,670" stroke="#2d6a4f" stroke-width="7" stroke-linecap="round"/>
+              <path d="M 260,620 L 260,675" stroke="#1b4332" stroke-width="7.5" stroke-linecap="round"/>
+              <path d="M 272,618 L 276,668" stroke="#40916c" stroke-width="6.5" stroke-linecap="round"/>
+              <path d="M 284,615 L 290,658" stroke="#2d6a4f" stroke-width="5.5" stroke-linecap="round"/>
+            </g>
+          </g>
+
+          <!-- ================= SATEN KURDELE ================= -->
+          <g id="ribbon-bow" filter="url(#soft-shadow)">
+            <ellipse cx="260" cy="525" rx="14" ry="12" fill="url(#satin-ribbon)" />
+            <ellipse cx="260" cy="523" rx="8" ry="5" fill="url(#ribbon-highlight)" />
+
+            <!-- Sol Kanat -->
+            <path d="M 252,523 C 220,500 185,495 190,525 C 195,550 230,540 252,529 Z" fill="url(#satin-ribbon)" />
+            <path d="M 248,521 C 225,505 205,505 208,520 C 212,535 235,530 248,525 Z" fill="url(#ribbon-highlight)" opacity="0.4" />
+
+            <!-- Sağ Kanat -->
+            <path d="M 268,523 C 300,500 335,495 330,525 C 325,550 290,540 268,529 Z" fill="url(#satin-ribbon)" />
+            <path d="M 272,521 C 295,505 315,505 312,520 C 308,535 285,530 272,525 Z" fill="url(#ribbon-highlight)" opacity="0.4" />
+
+            <!-- Sarkan Uçlar -->
+            <path d="M 255,531 Q 238,570 220,615 L 235,610 Q 250,575 259,535 Z" fill="url(#satin-ribbon)" />
+            <path d="M 265,531 Q 282,570 300,620 L 285,615 Q 272,575 261,535 Z" fill="url(#satin-ribbon)" />
+          </g>
+
+          <!-- Ataç Takılma Bölgesi (Paperclip SVG Parçası - Kartın üzerine binecektir) -->
+        </svg>
+
+        <!-- ================= ATAÇ İLE TUTTURULMUŞ KÜÇÜK 3D NOT KARTI ================= -->
+        <div class="clipped-note-wrapper" id="clippedNote">
+          
+          <!-- Gerçekçi Metalik Ataç (Paperclip) -->
+          <div class="paperclip-anchor" title="Ataç ile tutturulmuş not">
+            <svg class="paperclip-svg" viewBox="0 0 34 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,80 
+                       L 12,22 
+                       C 12,12 24,12 24,22 
+                       L 24,68 
+                       C 24,76 8,76 8,68 
+                       L 8,14 
+                       C 8,3 28,3 28,14 
+                       L 28,60" 
+                    stroke="url(#paperclip-silver)" 
+                    stroke-width="3.6" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round"
+                    filter="url(#paperclip-shadow)" />
+            </svg>
+          </div>
+
+          <!-- Küçük 3D Flip Not Kartı -->
+          <div class="note-card" id="noteCard">
+            
+            <!-- ÖN YÜZ (Front - Sade & Şık "Ecrin Hanım'a") -->
+            <div class="card-face card-front">
+              <div class="card-paper-texture">
+                <div class="clip-indent"></div>
+                <div class="front-flower-badge">🌷</div>
+                <h2 class="card-title">Ecrin Hanım'a</h2>
+                <div class="card-line-ornament">
+                  <span></span>
+                  <span class="mini-heart">❤️</span>
+                  <span></span>
+                </div>
+                <div class="card-touch-indicator">
+                  <span class="hand-icon">👆</span>
+                  <span class="indicator-text">Çevirmek için dokun</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ARKA YÜZ (Back - Sevgi Dolu Not) -->
+            <div class="card-face card-back">
+              <div class="card-back-content">
+                <div class="note-top-pin">💌</div>
+                <div class="note-text-body">
+                  <p class="note-msg">
+                    Dün gece seninle sabahlamak isterken uykuya yenildim. Belki biraz üzdüm seni ama inan, seni üzmek isteyeceğim son şey bile değil.
+                  </p>
+                  <p class="note-msg">
+                    Bu çiçekler sana olan sevgimin küçük bir hatırası olsun. İyi ki varsın Ecrin'im. ❤️🌷
+                  </p>
+                  <p class="note-love">
+                    Seni çok seviyorum
+                  </p>
+                </div>
+                <div class="note-flip-back">
+                  <span>↺ Geri çevir</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div> <!-- /bouquet-wrapper -->
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
